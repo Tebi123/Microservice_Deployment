@@ -181,6 +181,7 @@ pipeline {
                         sh 'kubectl apply -f deployment.yaml'
                         sh 'sleep 20'
                         sh 'kubectl get pod'
+                        sh 'kubectl get svc'
                     }
                 }
             }
