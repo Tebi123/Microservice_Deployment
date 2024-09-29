@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: ceeepath/adservice:${DOCKER_TAG}
+        image: ceeepath/adservice:IMAGE_TAG
         ports:
         - containerPort: 9555
         env:
