@@ -168,6 +168,25 @@ pipeline {
             }
         }
       }
+      stage('aws-authenticate') {
+              steps {
+                script {
+               withAWS(credentials: 'aws_credentials', region: 'us-east-1') {
+                    dir("/var/lib/jenkins/workspace/microservice/") {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name class-eks-cluster'
+                        // Replace the placeholder in the deployment.yaml file with the actual DOCKER_TAG value (edit in place)
+                        sh """
+                            sed -i 's|IMAGE_TAG|${DOCKER_TAG}|g' deployment.yaml
+                        """
+                        sh 'kubectl apply -f deployment.yaml'
+                        sh 'sleep 20'
+                        sh 'kubectl get pod'
+                        sh 'kubectl get svc'
+                    }
+                }
+            }
+        }
+      }
     }
     post {
         always {
