@@ -17,7 +17,7 @@ pipeline {
               steps {
                script {
                  withDockerRegistry(credentialsId: 'dockerpass', toolName: 'docker') {
-                    dir('/var/lib/jenkins/workspace/Microservice_Deployment/src/adservice/') {
+                    dir('/var/lib/jenkins/workspace/microservice/src/adservice/') {
                         sh "docker build -t ceeepath/adservice:${DOCKER_TAG} ."
                         sh "docker push ceeepath/adservice:${DOCKER_TAG}"
                         sh "docker rmi ceeepath/adservice:${DOCKER_TAG}"
