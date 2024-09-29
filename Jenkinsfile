@@ -13,6 +13,20 @@ pipeline {
                 }
             }
         }
+            stage('adservice') {
+              steps {
+               script {
+                 withDockerRegistry(credentialsId: 'dockerpass', toolName: 'docker') {
+                    dir('/var/lib/jenkins/workspace/Microservice_Deployment/src/adservice/') {
+                        sh "docker build -t ceeepath/adservice:${DOCKER_TAG} ."
+                        sh "docker push ceeepath/adservice:${DOCKER_TAG}"
+                        sh "docker rmi ceeepath/adservice:${DOCKER_TAG}"
+                        sh 'docker system prune -a -f --volumes'
+                    }
+                }
+            }
+        }
+            }
     }
     post {
         always {
